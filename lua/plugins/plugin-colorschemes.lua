@@ -5,13 +5,13 @@ return {
 		cmd = { "Catppuccin", "CatppuccinCompile"},
 		config = function ()
 			require("catppuccin").setup({
-				integrations = {treesitter = true, cmp = true, },
+				integrations = {treesitter = true, cmp = true, indent_blankline = {enabled = true}},
 				flavour = "macchiato",
 			})
 		end,
 	},
 	{
-		"folke/tokyonight.nvim"
+		"folke/tokyonight.nvim",
 	},
 	{
 		"navarasu/onedark.nvim",
@@ -40,7 +40,7 @@ return {
 					-- "dashboard",
 					-- "gitsigns",
 					-- "hop",
-					-- "indent-blankline",
+					"indent-blankline",
 					-- "lspsaga",
 					-- "mini",
 					-- "neogit",

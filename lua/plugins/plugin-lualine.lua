@@ -1,52 +1,37 @@
-local function null_ls_registered_names(filetype)
-	local s = require "null-ls.sources"
-	local available_sources = s.get_available(filetype)
-	local registered = {}
-	for _, source in ipairs(available_sources) do
-		if source.filetypes[filetype] then
-			table.insert(registered, source.name)
-		end
-	end
-	return registered
-end
-
 local function configure()
-	-- Eviline config for lualine
-	-- Author: shadmansaleh
-	-- Credit: glepnir
-	local lualine = require('lualine')
+	local lualine = require("lualine")
 
 	local lsp_component = {
 		function()
+			-- Thank you LunarVim part of this function
 			local buf_clients = vim.lsp.get_active_clients()
-			if next(buf_clients) == nil then return "LSP Inactive" end
 			local buf_ft = vim.bo.filetype
-			local buf_client_names = {}
-			local copilot_active = false
+			local names = {}
 
 			-- add client
 			for _, client in pairs(buf_clients) do
-				if client.name ~= "null-ls" and client.name ~= "copilot" then
-					table.insert(buf_client_names, client.name)
-				end
-
-				if client.name == "copilot" then
-					copilot_active = true
+				if client.name ~= "null-ls" then
+					table.insert(names, client.name)
 				end
 			end
 
-			vim.list_extend(buf_client_names, null_ls_registered_names(buf_ft))
-			local unique_client_names = vim.fn.uniq(buf_client_names)
-
-			local language_servers = "[" .. table.concat(unique_client_names, ", ") .. "]"
-
-			if copilot_active then
-				language_servers = language_servers .. "%#SLCopilot#" .. " " .. ' ' .. "%*"
+			local sources = require("null-ls").get_sources()
+			for _, source in ipairs(sources) do
+				if source.filetypes[buf_ft] and not source.generator._failed then
+					table.insert(names, source.name)
+				end
 			end
+
+			if next(names) == nil then
+				return "LSP Inactive"
+			end
+			names = vim.fn.uniq(names)
+
+			local language_servers = table.concat(names, ", ")
 
 			return language_servers
 		end,
-		color = { gui = "bold" },
+		color = {gui = 'italic'}
 	}
 
 	local function diff_source()
@@ -55,7 +40,7 @@ local function configure()
 			return {
 				added = gitsigns.added,
 				modified = gitsigns.changed,
-				removed = gitsigns.removed
+				removed = gitsigns.removed,
 			}
 		end
 	end
@@ -63,8 +48,8 @@ local function configure()
 	-- Config
 	local config = {
 		options = {
-			component_separators = { left = '', right = ''},
-			section_separators = { left = '', right = '' },
+			component_separators = { left = "", right = "" },
+			section_separators = { left = "", right = "" },
 			disabled_filetypes = {
 				statusline = {},
 				winbar = {},
@@ -73,39 +58,46 @@ local function configure()
 			globalstatus = false,
 			refresh = {
 				statusline = 1000,
-			tabline = 1000,
-			winbar = 1000,
-			}
+				tabline = 1000,
+				winbar = 1000,
+			},
 		},
 		sections = {
-			lualine_a = {{'mode', fmt = function(a) return ' ' .. a end}},
-			lualine_b = {'branch', {'diff', source = diff_source, symbols = { added = ' ', modified = ' ', removed = ' ' },}},
-			lualine_c = {'%=','filetype', lsp_component},
-			lualine_x = {'searchcount', 'diagnostics'},
-			lualine_y = {{'fileformat', padding = 0},{'hostname', padding = {right = 0, left = 1}}, 'encoding'},
-			lualine_z = {{'location', padding = 0}, 'progress'}
+			lualine_a = { {
+				"mode",
+				fmt = function(a)
+					return " " .. a
+				end,
+			} },
+			lualine_b = {
+				"branch",
+				{ "diff", source = diff_source, symbols = { added = " ", modified = " ", removed = " " } },
+			},
+			lualine_c = { "%=", {"filetype", color = {gui = 'bold'}}, lsp_component },
+			lualine_x = { "searchcount", "diagnostics" },
+			lualine_y = { { "fileformat", padding = 0 }, { "hostname", padding = { right = 0, left = 1 } }, "encoding" },
+			lualine_z = { { "location", padding = 0 }, "progress" },
 		},
 		inactive_sections = {
 			lualine_a = {},
-			lualine_b = {'branch', {'diff', source = diff_source, }},
-			lualine_c = {'%=','filetype', 'filename'},
+			lualine_b = { "branch", { "diff", source = diff_source } },
+			lualine_c = { "%=", "filetype", "filename" },
 			lualine_x = {},
-			lualine_y = {{'fileformat', padding = 0},{'hostname', padding = {right = 0, left = 1}}, 'encoding'},
-			lualine_z = {}
+			lualine_y = { { "fileformat", padding = 0 }, { "hostname", padding = { right = 0, left = 1 } }, "encoding" },
+			lualine_z = {},
 		},
 		tabline = {},
 		winbar = {},
 		inactive_winbar = {},
-		extensions = {}
-}
+		extensions = {},
+	}
 
 	lualine.setup(config)
 end
 
 return {
-	'nvim-lualine/lualine.nvim',
-	dependencies = {'kyazdani42/nvim-web-devicons'},
+	"nvim-lualine/lualine.nvim",
+	dependencies = { "nvim-tree/nvim-web-devicons" },
 	config = configure,
-	event = {'BufReadPre', 'BufNewFile'},
-
+	event = { "BufReadPre", "BufNewFile" },
 }

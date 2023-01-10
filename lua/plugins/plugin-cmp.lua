@@ -12,6 +12,7 @@ local snippet_spec = {
 local function cmp_configure()
 	local cmp = require('cmp')
 	local luasnip = require('luasnip')
+	local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 
 	local kind_icons = {
 		Text = "",
@@ -59,7 +60,7 @@ local function cmp_configure()
 			}),
 			-- Accept currently selected item. If none selected, `select` first item.
 			-- Set `select` to `false` to only confirm explicitly selected items.
-			["<CR>"] = cmp.mapping.confirm({ select = true }),
+			["<CR>"] = cmp.mapping.confirm({ select = false }),
 			["<Tab>"] = cmp.mapping(function(fallback)
 				if cmp.visible() then
 					cmp.select_next_item()
@@ -99,6 +100,7 @@ local function cmp_configure()
 			{ name = "luasnip" },
 			{ name = "buffer" },
 			{ name = "path" },
+			{ name = "nvim_lsp_signature_help" },
 		},
 		confirm_opts = {
 			behavior = cmp.ConfirmBehavior.Replace,
@@ -109,15 +111,18 @@ local function cmp_configure()
 			documentation = cmp.config.window.bordered(),
 		},
 	})
+	cmp.event:on(
+		'confirm_done',
+		cmp_autopairs.on_confirm_done()
+	)
 end
 
 local cmp_spec = {
 	{
 		'hrsh7th/nvim-cmp',
 		event = "InsertEnter",
-		dependencies = {'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path', 'saadparwaiz1/cmp_luasnip', "L3MON4D3/LuaSnip", 'neovim/nvim-lspconfig', 'hrsh7th/cmp-nvim-lua'},
+		dependencies = {'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path', 'saadparwaiz1/cmp_luasnip', "L3MON4D3/LuaSnip", 'neovim/nvim-lspconfig', 'hrsh7th/cmp-nvim-lua', "hrsh7th/cmp-nvim-lsp-signature-help", "windwp/nvim-autopairs"},
 		config = cmp_configure
 	}
 }
-
 return {snippet_spec, cmp_spec}

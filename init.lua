@@ -10,8 +10,10 @@ vim.opt.termguicolors = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.signcolumn = "yes"
+vim.g.mapleader = ' '
 
-require('pack')
+require 'pack'
 
 -- After plugins
+require 'keymappings'
 vim.cmd [[ colorscheme catppuccin ]]
