@@ -1,18 +1,22 @@
 return {
 	"nvim-telescope/telescope.nvim",
 	branch = "0.1.x",
-	dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons", "nvim-treesitter/nvim-treesitter" },
-	cmd = "Telescope",
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+		"nvim-tree/nvim-web-devicons",
+		"nvim-telescope/telescope-ui-select.nvim",
+	},
 	config = function()
-		require("telescope").setup({
+		local t = require("telescope")
+		t.setup({
 			defaults = {
 				-- Default configuration for telescope goes here:
 				-- config_key = value,
 				mappings = {
-					n= {
+					n = {
 						["<C-h>"] = "which_key",
 					},
-					i = {["<C-h>"] = "which_key"}
+					i = { ["<C-h>"] = "which_key" },
 				},
 			},
 			pickers = {
@@ -25,6 +29,9 @@ return {
 				-- builtin picker
 			},
 			extensions = {
+				["ui-select"] = {
+					require("telescope.themes").get_dropdown({}),
+				},
 				-- Your extension configuration goes here:
 				-- extension_name = {
 				--   extension_config_key = value,
@@ -32,5 +39,6 @@ return {
 				-- please take a look at the readme of the extension you want to configure
 			},
 		})
+		t.load_extension("ui-select")
 	end,
 }

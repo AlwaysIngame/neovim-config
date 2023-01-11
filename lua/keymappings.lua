@@ -4,18 +4,31 @@ vim.keymap.set("n", "<C-j>", "<C-w>j")
 vim.keymap.set("n", "<C-k>", "<C-w>k")
 vim.keymap.set("n", "<C-l>", "<C-w>l")
 -- Save File
-vim.keymap.set({'n','i'}, "<C-s>", "<cmd>w<CR>")
+vim.keymap.set({ "n", "i" }, "<C-s>", "<cmd>w<CR>")
 -- Better Indent
 vim.keymap.set("v", ">", ">gv")
 vim.keymap.set("v", "<", "<gv")
 -- Move line up/down vs-code style
-vim.keymap.set('v', "<A-j>", ":m '>+1<CR>gv-gv")
-vim.keymap.set('v', "<A-k>", ":m '<-2<CR>gv-gv")
+vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv-gv")
+vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv-gv")
 
 -- Commenting keybinds (Note there are more keybinds defined by the plugin)
 -- https://github.com/numToStr/Comment.nvim
-vim.keymap.set('n', '<leader>/',function() require('Comment.api').toggle.linewise.current() end, {desc = "Toggle Comment", silent = true})
-vim.keymap.set('v', '<leader>/', "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", {desc = "Toggle Comment", silent = true})
+vim.keymap.set("n", "<leader>/", function()
+	require("Comment.api").toggle.linewise.current()
+end, { desc = "Toggle Comment", silent = true })
+vim.keymap.set(
+	"v",
+	"<leader>/",
+	"<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
+	{ desc = "Toggle Comment", silent = true }
+)
+
+vim.keymap.set("t", "<esc>", '<C-\\><C-n>', { desc = "Terminal Normal Mode" })
+vim.keymap.set("t", "<C-h>", '<Cmd>wincmd h<CR>')
+vim.keymap.set("t", "<C-j>", '<Cmd>wincmd j<CR>')
+vim.keymap.set("t", "<C-k>", '<Cmd>wincmd k<CR>')
+vim.keymap.set("t", "<C-l>", '<Cmd>wincmd l<CR>')
 
 -- change leader key in init.lua
 -- loads which key plugin
@@ -52,5 +65,12 @@ wk.register({
 			"Workspace Symbols",
 		},
 		e = { "<cmd>Telescope quickfix<cr>", "Telescope Quickfix" },
+	},
+	t = {
+		name = "+Terminal",
+		b = {"<cmd>Workspace TerminalBrowser Focus<CR>", "Focus Terminal Browser"},
+		t = {"<cmd>Workspace Terminal Focus<CR>i", "Focus Terminal Pane"},
+		n = {"<cmd>Workspace TerminalBrowser New<CR>", "New Terminal"},
+		h = {"<cmd>Workspace Terminal Hide<CR>", "Hide Terminal Pane"},
 	},
 }, { prefix = "<leader>" })

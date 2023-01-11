@@ -3,6 +3,7 @@ local function configure()
 
 	local lsp_component = {
 		function()
+			if not vim.lsp.buf.server_ready() then return "LSP Inactive" end
 			-- Thank you LunarVim part of this function
 			local buf_clients = vim.lsp.get_active_clients()
 			local buf_ft = vim.bo.filetype
@@ -14,7 +15,6 @@ local function configure()
 					table.insert(names, client.name)
 				end
 			end
-
 			local sources = require("null-ls").get_sources()
 			for _, source in ipairs(sources) do
 				if source.filetypes[buf_ft] and not source.generator._failed then
@@ -55,7 +55,7 @@ local function configure()
 				winbar = {},
 			},
 			ignore_focus = {},
-			globalstatus = false,
+			globalstatus = true,
 			refresh = {
 				statusline = 1000,
 				tabline = 1000,
@@ -99,5 +99,5 @@ return {
 	"nvim-lualine/lualine.nvim",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	config = configure,
-	event = { "BufReadPre", "BufNewFile" },
+	lazy = false,
 }
