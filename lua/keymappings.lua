@@ -73,4 +73,9 @@ wk.register({
 		n = {"<cmd>Workspace TerminalBrowser New<CR>", "New Terminal"},
 		h = {"<cmd>Workspace Terminal Hide<CR>", "Hide Terminal Pane"},
 	},
+	w = {
+		name = "+Workspace",
+		l = {"<cmd>Workspace LeftPanelToggle<CR>", "Toggle Left Panel"},
+		r = {"<cmd>Workspace RightPanelToggle<CR>", "Toggle Right Panel"}
+	}
 }, { prefix = "<leader>" })
