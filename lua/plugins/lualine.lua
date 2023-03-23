@@ -48,6 +48,7 @@ local function configure()
 	-- Config
 	local config = {
 		options = {
+			globalstatus = true,
 			component_separators = { left = "", right = "" },
 			section_separators = { left = "", right = "" },
 			disabled_filetypes = {
@@ -55,7 +56,6 @@ local function configure()
 				winbar = {},
 			},
 			ignore_focus = {},
-			globalstatus = true,
 			refresh = {
 				statusline = 1000,
 				tabline = 1000,
@@ -80,7 +80,7 @@ local function configure()
 		},
 		inactive_sections = {
 			lualine_a = {},
-			lualine_b = { "branch", { "diff", source = diff_source } },
+			lualine_b = {"mode", "branch", { "diff", source = diff_source } },
 			lualine_c = { "%=", "filetype", "filename" },
 			lualine_x = {},
 			lualine_y = { { "fileformat", padding = 0 }, { "hostname", padding = { right = 0, left = 1 } }, "encoding" },
