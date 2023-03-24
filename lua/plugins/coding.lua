@@ -17,7 +17,8 @@ return {
 	'TimUntersberger/neogit',
 	cmd = {'Neogit'},
 	opts = {
-		kind = "tab"
+		kind = "tab",
+		disable_commit_confirmation = true,
 	}
   }
 }
