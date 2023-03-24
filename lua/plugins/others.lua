@@ -1,7 +1,53 @@
 -- since this is just an example spec, don't actually load anything here and return an empty spec
 -- stylua: ignore
-return { "Mofiqul/vscode.nvim", "rafamadriz/neon", {
+return { "Mofiqul/vscode.nvim", {
 	"NTBBloodbath/doom-one.nvim",
+	'shaunsingh/nord.nvim',
+	{
+		'catppuccin/nvim',
+		name = 'catppuccin',
+		opts = {
+			flavour = "frappe",
+			integrations = {
+				gitsigns = true,
+				mason = true,
+				mini = true,
+				neotree = true,
+				neogit = true,
+				noice = true,
+				cmp = true,
+				dap = {
+					enable = true,
+					enable_ui = true,
+				},
+				native_lsp = {
+					enabled = true,
+					virtual_text = {
+						errors = { "italic" },
+						hints = { "italic" },
+						warnings = { "italic" },
+						information = { "italic" },
+					},
+					underlines = {
+						errors = { "underline" },
+						hints = { "underline" },
+						warnings = { "underline" },
+						information = { "underline" },
+					},
+				},
+				navic = {
+					enabled = true
+				},
+				notify = true,
+				treesitter_context = true,
+				treesitter = true,
+				telescope = true,
+				lsp_trouble = true,
+				illuminate = true,
+				which_key = true,
+			}
+		}
+	},
 	config = function()
 		-- Add color to cursor
 		vim.g.doom_one_cursor_coloring = false
@@ -89,16 +135,24 @@ return { "Mofiqul/vscode.nvim", "rafamadriz/neon", {
 		})
 	end
 },
-{ 'famiu/bufdelete.nvim', cmd = {'Bdelete', 'Bwipeout'}, },
-{ 'echasnovski/mini.bracketed', lazy = false, config = function()
-	require('mini.bracketed').setup {
-		buffer = { suffix = '' },
-		quickfix = { suffix = '' },
+	{ 'famiu/bufdelete.nvim', cmd = { 'Bdelete', 'Bwipeout' }, },
+	{
+		'echasnovski/mini.bracketed',
+		lazy = false,
+		config = function()
+			require('mini.bracketed').setup {
+				buffer = { suffix = '' },
+				quickfix = { suffix = '' },
+			}
+			vim.keymap.set('n', '[b', '<cmd>BufferLineCyclePrev<CR>')
+			vim.keymap.set('n', '[B', '<cmd>BufferLineMovePrev<CR>')
+			vim.keymap.set('n', ']b', '<cmd>BufferLineCycleNext<CR>')
+			vim.keymap.set('n', ']B', '<cmd>BufferLineMoveNext<CR>')
+		end
+	},
+	{
+		'NvChad/nvim-colorizer.lua',
+		lazy = false,
+		config = function() require 'colorizer'.setup() end,
 	}
-	vim.keymap.set ('n', '[b', '<cmd>BufferLineCyclePrev<CR>')
-	vim.keymap.set ('n', '[B', '<cmd>BufferLineMovePrev<CR>')
-	vim.keymap.set ('n', ']b', '<cmd>BufferLineCycleNext<CR>')
-	vim.keymap.set ('n', ']B', '<cmd>BufferLineMoveNext<CR>')
-end
-},
 }
