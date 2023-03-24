@@ -1,6 +1,6 @@
 -- since this is just an example spec, don't actually load anything here and return an empty spec
 -- stylua: ignore
-return { "Mofiqul/vscode.nvim", "olimorris/onedarkpro.nvim", {
+return { "Mofiqul/vscode.nvim", "rafamadriz/neon", {
 	"NTBBloodbath/doom-one.nvim",
 	config = function()
 		-- Add color to cursor

@@ -4,4 +4,4 @@ require("config.lazy")
 require("config.keymaps")
 require("config.autocmds")
 
-vim.cmd [[colorscheme onedark]]
+vim.cmd [[colorscheme neon]]
