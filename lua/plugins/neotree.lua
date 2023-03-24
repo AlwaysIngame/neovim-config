@@ -228,7 +228,7 @@ return {
               ["gg"] = "git_commit_and_push",
             }
           }
-        }
+        },
       })
     end
 }

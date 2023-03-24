@@ -197,4 +197,10 @@ sections.s.v = {
   "Vertical Split",
 }
 
+sections.g.g = { function() require('neogit').open() end, "Neogit" }
+sections.t.f = { "<cmd>ToggleTerm direction=float<cr>", "ToggleTerm float" }
+sections.t.h = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "ToggleTerm horizontal split" }
+sections.t.v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "ToggleTerm vertical split" }
+vim.keymap.set( {'n', 't'}, "<C-\\>", "<cmd>ToggleTerm<cr>", {desc = "Toggle terminal"})
+
 require("which-key").register(sections, {prefix = "<leader>", mode = "n"});
