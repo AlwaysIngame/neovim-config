@@ -18,7 +18,7 @@ return {
 	cmd = {'Neogit'},
 	opts = {
 		kind = "tab",
-		disable_commit_confirmation = false,
+		disable_commit_confirmation = true,
 	}
   }
 }

@@ -1,12 +1,14 @@
 return {
     "folke/trouble.nvim",
     cmd = { "TroubleToggle", "Trouble" },
+	commit = "9db77e1",
     opts = { use_diagnostic_signs = true },
     keys = {
-      { "<leader>xx", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics (Trouble)" },
-      { "<leader>xX", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics (Trouble)" },
-      { "<leader>xL", "<cmd>TroubleToggle loclist<cr>", desc = "Location List (Trouble)" },
-      { "<leader>xQ", "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix List (Trouble)" },
+      { "<leader>lx", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics (Trouble)" },
+      { "<leader>lX", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics (Trouble)" },
+      { "<leader>ll", "<cmd>TroubleToggle loclist<cr>", desc = "Location List (Trouble)" },
+      { "<leader>lq", "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix List (Trouble)" },
+	  --[[
       {
         "[q",
         function()
@@ -29,5 +31,8 @@ return {
         end,
         desc = "Next trouble/quickfix item",
       },
+	  ]]--
     },
+	setup = {
+	},
   }
