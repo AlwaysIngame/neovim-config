@@ -4,7 +4,7 @@ return {
 	version = false, -- telescope did only one release, so use HEAD for now
 	opts = {
 		defaults = {
-			winblend = 30,
+			winblend = 20,
 			prompt_prefix = " ",
 			selection_caret = " ",
 		}

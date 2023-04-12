@@ -222,7 +222,7 @@ sections.t.h = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "ToggleTerm
 sections.t.v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "ToggleTerm vertical split" }
 vim.keymap.set({ 'n', 't' }, "<C-\\>", "<cmd>ToggleTerm<cr>", { desc = "Toggle terminal" })
 
-sections.l.a = { vim.lsp.buf.code_action(), "Code Action" }
+sections.l.a = { vim.lsp.buf.code_action, "Code Action" }
 sections.l.f = { vim.lsp.buf.format, "Format" }
 sections.l.i = { "<cmd>LspInfo<cr>", "Info" }
 sections.l.I = { "<cmd>Mason<cr>", "Mason Info" }
